@@ -1,9 +1,34 @@
-
-{% if user %}
 <h1>User Information</h1>
-<p>Name: {{ user.name }}</p>
-<p>Role: {{ user.role }}</p>
-<!-- Add more user information fields here -->
-{% else %}
-<p>User not found.</p>
-{% endif %}
+<h2>Name:{{ user.name }}</h2>
+<h2>Role:{{ user.role }}</h2>
+<h2>Connections:{{ user.connections }}</h2>
+<h2>Profile_Language:{{ user.profile_language }}</h2>
+
+<h1>Analytics</h1>
+<p>Profile Views: {{ analytics.profile_views }}</p>
+<p>Post Impressions: {{ analytics.post_impressions }}</p>
+<p>Search Appearance: {{ analytics.search_appearance }}</p>
+
+<h3>Resources</h3>
+<ul>
+    {% for resource in resources %}
+        <li>{{ resource.name }} - {{ resource.status }}</li>
+        <li>{{resource.text}}</li>
+    {% endfor %}
+</ul>
+<h3>Skills</h3>
+<ul>
+    {% for resource in skills %}
+        <li>{{ resource.skill_name }} </li>
+    {% endfor %}
+</ul>
+<h3>Education</h3>
+<ol>
+    {% for resource in education %}
+        <h1><li>{{ resource.educational_institute_name }} </li></h1>
+        <li>{{ resource.educational_institute_type }} </li>
+        <li>{{ resource.type }} </li>
+        <li>{{ resource.time_period }} </li>
+        <li>{{ resource.grade }} </li>
+    {% endfor %}
+</ol>

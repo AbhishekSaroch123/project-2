@@ -4,7 +4,7 @@
     {% for user in latest_users_list %}
         {% comment %} <li><a href="/polls/{{ question.id }}/" >{{ question.question_text }}</a></li> {% endcomment %}
         {% comment %} question is coming from for loop {% endcomment %}
-        <li><a href="">{{ user.name }}</a></li>
+        <li> <a href="{% url 'project2:user-information' user.id %}">{{ user.name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

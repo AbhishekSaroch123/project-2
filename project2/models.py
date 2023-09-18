@@ -10,7 +10,6 @@ class User(models.Model):
     connections=models.PositiveBigIntegerField()
     profile_language=models.CharField(max_length=255)
     public_profile_url=models.URLField()
-
     def __str__(self):
         return self.name
     
