@@ -1,0 +1,9 @@
+
+{% if user %}
+<h1>User Information</h1>
+<p>Name: {{ user.name }}</p>
+<p>Role: {{ user.role }}</p>
+<!-- Add more user information fields here -->
+{% else %}
+<p>User not found.</p>
+{% endif %}

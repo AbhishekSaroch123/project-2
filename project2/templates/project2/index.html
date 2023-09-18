@@ -1,0 +1,12 @@
+{% load static %}
+{% if latest_users_list %}
+    <ul>
+    {% for user in latest_users_list %}
+        {% comment %} <li><a href="/polls/{{ question.id }}/" >{{ question.question_text }}</a></li> {% endcomment %}
+        {% comment %} question is coming from for loop {% endcomment %}
+        <li><a href="">{{ user.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Users are available.</p>
+{% endif %}
