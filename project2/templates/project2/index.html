@@ -7,6 +7,8 @@
         <li> <a href="{% url 'project2:user-information' user.id %}">{{ user.name }}</a></li>
     {% endfor %}
     </ul>
+    <h2> <a href="{% url 'project2:create-user'  %}">Create A User</a></h2> 
 {% else %}
     <p>No Users are available.</p>
-{% endif %}
+    {% endif %}
+
