@@ -39,7 +39,7 @@ def create_user(request):
 def index(request):
     userData=User.objects.all()
     data= {
-        "Users":list(userData.values())
+        "users":list(userData.values())
     }
     return JsonResponse(data)
 
