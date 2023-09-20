@@ -14,6 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+APPEND_SLASH = False
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +26,10 @@ SECRET_KEY = 'django-insecure-&sapsu8p05$auo@n+&3ja)a(ttusocqmy()7%ln*yws9kw8(32
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS=['f4a6-2401-4900-5f20-32c6-31d6-e3e3-1c3d-bcb7.ngrok-free.app', 'localhost','127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://f4a6-2401-4900-5f20-32c6-31d6-e3e3-1c3d-bcb7.ngrok-free.app']
+
+
 
 
 # Application definition
@@ -38,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
