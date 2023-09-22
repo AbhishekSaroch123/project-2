@@ -2,6 +2,9 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from .models import User
+from model_bakery import baker
+from .models import User
+from .serializers import UserSerializer
 
 class UserTestCase(TestCase):
     def setUp(self):
@@ -22,5 +25,53 @@ class UserTestCase(TestCase):
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+class UserTestCase1(TestCase):
+    def test_user_model_creation(self):
+        # Create a user instance using Model Bakery
+        user = baker.make(
+            User,
+            name="Abhishek Sharma",
+            role="Developer",
+            location="Shimla",
+            connections=50,
+            profile_language="English",
+            public_profile_url="https://example.com/abhisheksharma"
+        )
+
+        # Perform assertions to test the user instance
+        self.assertEqual(user.name, "Abhishek Sharma")
+        self.assertEqual(user.role, "Developer")
+        self.assertEqual(user.location, "Shimla")
+        self.assertEqual(user.connections, 50)
+        self.assertEqual(user.profile_language, "English")
+        self.assertEqual(user.public_profile_url, "https://example.com/abhisheksharma")
+
+    def test_user_serializer(self):
+        # Create a user instance using Model Bakery
+        user = baker.make(
+            User,
+            name="Abhishek Rana",
+            role="Data Scientist",
+            location="Kangra",
+            connections=75,
+            profile_language="English",
+            public_profile_url="https://example.com/abhishekrana"
+        )
+
+        # Serialize the user instance using the UserSerializer with data
+        serializer = UserSerializer(data=User.objects.filter(id=user.id).values().first())
+
+        # Validate the serialized data
+        self.assertTrue(serializer.is_valid())
+        self.assertEqual(serializer.data['name'], "Abhishek Rana")
+        self.assertEqual(serializer.data['role'], "Data Scientist")
+        self.assertEqual(serializer.data['location'], "Kangra")
+        self.assertEqual(serializer.data['connections'], 75)
+        self.assertEqual(serializer.data['profile_language'], "English")
+        self.assertEqual(serializer.data['public_profile_url'], "https://example.com/abhishekrana")
+
+
+
 
  
