@@ -47,7 +47,6 @@ class UserAPITestCase(APITestCase):
         expected_data_education = EducationSerializer(education).data
         expected_data_skills = SkillsSerializer(skills).data
 
-        # Update the following lines to access the list elements correctly:
         self.assertIn('name', response.data[0])
         self.assertIn('education_set', response.data[0])  # Check for related education data
         self.assertIn('skills_set', response.data[0])
