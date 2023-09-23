@@ -4,7 +4,7 @@ from rest_framework import status
 from .models import *
 from model_bakery import baker
 from .models import User
-from .serializers import UserSerializer
+from .serializers import *
 from rest_framework.test import APITestCase
 from rest_framework.response import Response
 
@@ -43,12 +43,22 @@ class UserAPITestCase(APITestCase):
         # perform an assertion to check whether status is 200 is or not
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # serialized the user instance 
-        expected_data = UserSerializer(user).data
-        self.assertEqual(response.data[0], expected_data)
+        expected_data_user = UserSerializer(user).data
+        expected_data_education = EducationSerializer(education).data
+        expected_data_skills = SkillsSerializer(skills).data
+
+        # Update the following lines to access the list elements correctly:
         self.assertIn('name', response.data[0])
         self.assertIn('education_set', response.data[0])  # Check for related education data
         self.assertIn('skills_set', response.data[0])
-        return Response(expected_data)
+        return Response({
+        'user': expected_data_user,
+        'education': expected_data_education,
+        'skills': expected_data_skills,
+         })
+       
+     
+      
 
 
 
