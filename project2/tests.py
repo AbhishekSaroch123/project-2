@@ -6,7 +6,7 @@ from model_bakery import baker
 from .models import User
 from .serializers import UserSerializer
 from rest_framework.test import APITestCase
-
+from rest_framework.response import Response
 
 class UserTestCase(TestCase):
     def setUp(self):
@@ -49,6 +49,8 @@ class UserAPITestCase(APITestCase):
         # serialized the user instance 
         expected_data = UserSerializer(user).data
         self.assertEqual(response.data[0], expected_data)
+        self.assertIn('name', response.data[0])
+        return Response(expected_data)
 
 
 
