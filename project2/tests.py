@@ -40,10 +40,13 @@ class UserAPITestCase(APITestCase):
             profile_language="English",
             public_profile_url="https://example.com/Kartik"
         )
+        # Generate URL For My EndPoint
         url = reverse('project2:get_users_api')
+        # makes a get request for my url
         response = self.client.get(url)
-        print(response)
+        # perform an assertion to check whether status is 200 is or not
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # serialized the user instance 
         expected_data = UserSerializer(user).data
         self.assertEqual(response.data[0], expected_data)
 
