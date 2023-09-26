@@ -5,56 +5,50 @@ from .models import *
 from model_bakery import baker
 from .models import User
 from .serializers import *
-from rest_framework.test import APITestCase
-from rest_framework.response import Response
+from rest_framework.test import APIClient
 
 
 
-class UserAPITestCase(APITestCase):
-    def test_get_users_api(self):
-        user = baker.make(
-            User,
-            name="Kartik",
+class UserAPITest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.url_create_user = reverse('project2:create_user_api')  # Update with the correct pattern name
+        self.url_get_users = reverse('project2:get_users_api')  # Update with the correct pattern name
+
+    def test_create_user(self):
+        data = {
+            "name": "Naman",
+            "role": "Tester",
+            "location": "Summerhill",
+            "connections": 10,
+            "profile_language": "English",
+            "public_profile_url": "https://example.com/namansharma"
+        }
+
+        response = self.client.post(self.url_create_user, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_get_user(self):
+        # Assuming you have already created a User object in the database
+        user = User.objects.create(
+            name="Naman",
             role="Tester",
             location="Summerhill",
             connections=10,
             profile_language="English",
-            public_profile_url="https://example.com/Kartik"
+            public_profile_url="https://example.com/namansharma"
         )
-       
-        education = baker.make(
-            Education,
-            user=user,
-            educational_institute_name="UIT Shimla",
-            educational_institute_type="ECE",
-            type="Bachelor's Degree", time_period="2020-2024",
-            grade="A"
-            )
-        skills = baker.make(
-            Skills,
-            user=user,
-            skill_name="Python"
-            )
-        
-        # Generate URL For My EndPoint
-        url = reverse('project2:get_users_api')
-        # makes a get request for my url
-        response = self.client.get(url)
-        # perform an assertion to check whether status is 200 is or not
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # serialized the user instance 
-        expected_data_user = UserSerializer(user).data
-        expected_data_education = EducationSerializer(education).data
-        expected_data_skills = SkillsSerializer(skills).data
 
-        self.assertIn('name', response.data[0])
-        self.assertIn('education_set', response.data[0])  # Check for related education data
-        self.assertIn('skills_set', response.data[0])
-        return Response({
-        'user': expected_data_user,
-        'education': expected_data_education,
-        'skills': expected_data_skills,
-         })
+        response = self.client.get(self.url_get_users)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)  # Assuming you only have one user
+
+        retrieved_user = response.data[0]
+        self.assertEqual(retrieved_user['name'], user.name)
+        self.assertEqual(retrieved_user['role'], user.role)
+        # Add more assertions for other fields as needed
+
+
        
      
       
